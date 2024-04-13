@@ -1,3 +1,22 @@
+# todo list
+
+- publish to web/wasm
+    https://fyrox-book.github.io/shipping/wasm.html
+    cd executor-wasm
+    wasm-pack build --target=web --release
+    ln -s ../data data
+    http-server . -p 8080 -c-1 --cors
+- load 3d models
+- object picking
+- physics
+- spawn objects
+- messaging
+- persistence
+    https://fyrox-book.github.io/serialization/save.html
+
+
+# notes
+
 https://fyrox-book.github.io/beginning/scripting.html
     cargo install fyrox-template
         fyrox-template init --name fyrox_test_2d --style 2d
@@ -23,11 +42,12 @@ in each file nagging about unused vars, at root file level:
 #![allow(unused)]
 ```
 
-logging is available under fyrox::log::Log
+logging is available under fyrox::log::Log https://fyrox-book.github.io/misc/log.html
 Log::info(...)
 
 https://fyrox-book.github.io/scene/base_node.html
 
+https://fyrox-book.github.io/tutorials/tutorials.html
 
 https://github.com/FyroxEngine/Fyrox/tree/master/examples
 https://github.com/FyroxEngine/Fyrox-demo-projects https://fyrox.rs/examples.html

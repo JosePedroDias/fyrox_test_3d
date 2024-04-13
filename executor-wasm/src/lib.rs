@@ -1,7 +1,12 @@
 //! Executor with your game connected to it as a plugin.
 use fyrox::engine::executor::Executor;
-use fyrox_test_3d::GameConstructor;
 use fyrox::core::wasm_bindgen::{self, prelude::*};
+use fyrox::dpi::LogicalSize;
+use fyrox::engine::GraphicsContextParams;
+use fyrox::event_loop::EventLoop;
+use fyrox::window::WindowAttributes;
+
+use fyrox_test_3d::GameConstructor;
 
 #[wasm_bindgen]
 extern "C" {
@@ -39,7 +44,19 @@ pub fn set_panic_hook() {
 #[wasm_bindgen]
 pub fn main() {
     set_panic_hook();
-    let mut executor = Executor::new();
+    //let mut executor = Executor::new();
+    
+    let mut window_attributes = WindowAttributes::default();
+    window_attributes.inner_size = Some(LogicalSize::new(1280.0, 720.0).into());
+    window_attributes.resizable = true;
+    let mut executor = Executor::from_params(
+        EventLoop::new().unwrap(),
+        GraphicsContextParams {
+            window_attributes,
+            vsync: true,
+        },
+    );
+    
     executor.add_plugin_constructor(GameConstructor);
     executor.run()
 }
