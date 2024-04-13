@@ -1,10 +1,10 @@
 //! Executor with your game connected to it as a plugin.
 use fyrox::engine::executor::Executor;
-use fyrox::core::wasm_bindgen::{self, prelude::*};
 use fyrox::dpi::LogicalSize;
 use fyrox::engine::GraphicsContextParams;
 use fyrox::event_loop::EventLoop;
 use fyrox::window::WindowAttributes;
+use fyrox::core::wasm_bindgen::{self, prelude::*};
 
 use fyrox_test_3d::GameConstructor;
 
@@ -49,6 +49,7 @@ pub fn main() {
     let mut window_attributes = WindowAttributes::default();
     window_attributes.inner_size = Some(LogicalSize::new(1280.0, 720.0).into());
     window_attributes.resizable = true;
+    window_attributes.title = "3d game".to_string();
     let mut executor = Executor::from_params(
         EventLoop::new().unwrap(),
         GraphicsContextParams {

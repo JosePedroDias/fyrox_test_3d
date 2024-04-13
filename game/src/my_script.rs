@@ -1,8 +1,10 @@
 #![allow(unused)]
 
+use std::{process::exit, borrow::Borrow};
+
 use fyrox::{
     core::{visitor::prelude::*, reflect::prelude::*, type_traits::prelude::*, log::Log},
-    event::{Event, WindowEvent, ElementState},
+    event::{Event, WindowEvent, ElementState, DeviceId, DeviceEvent, MouseButton},
     script::{ScriptContext, ScriptDeinitContext, ScriptTrait},
     keyboard::{PhysicalKey, KeyCode}, scene::mesh::Mesh
 };
@@ -36,25 +38,41 @@ impl ScriptTrait for MyScript {
     }
 
     fn on_os_event(&mut self, event: &Event<()>, context: &mut ScriptContext) {
-        // Respond to OS events here.
-        if let Event::WindowEvent { event, .. } = event {
-    
-            // Destructure the WindowEvent if it is a KeyboardInput
-            if let WindowEvent::KeyboardInput { event, .. } = event {
-    
-                // Check if the key is currently being pressed
-                let pressed = event.state == ElementState::Pressed;
-    
-                // Check if the key being pressed/released is W, A, S, or D
-                // Update state accordingly
-                match event.physical_key {
-                    PhysicalKey::Code(KeyCode::KeyA) => self.move_left = pressed,
-                    PhysicalKey::Code(KeyCode::KeyD) => self.move_right = pressed,
-                    PhysicalKey::Code(KeyCode::KeyW) => self.move_up = pressed,
-                    PhysicalKey::Code(KeyCode::KeyS) => self.move_down = pressed,
+        
+        match event {
+            Event::DeviceEvent {
+                event: DeviceEvent::MouseMotion {
+                    delta: (dx, dy),
+                },
+                ..
+            } => Log::info(format!("mouse motion: {}, {}", dx, dy)),
+            Event::WindowEvent { event, .. } => {
+                match event {
+                    WindowEvent::KeyboardInput { device_id, event, is_synthetic } => {
+                        let pressed = event.state == ElementState::Pressed;
+                        
+                        match event.physical_key {
+                            PhysicalKey::Code(KeyCode::KeyA) => self.move_left = pressed,
+                            PhysicalKey::Code(KeyCode::KeyD) => self.move_right = pressed,
+                            PhysicalKey::Code(KeyCode::KeyW) => self.move_up = pressed,
+                            PhysicalKey::Code(KeyCode::KeyS) => self.move_down = pressed,
+                            PhysicalKey::Code(KeyCode::Escape) => exit(0), // TODO refactor
+                            _ => ()
+                        }
+                    },
+                    WindowEvent::MouseInput { button, state, .. } => {
+                        if *state == ElementState::Pressed {
+                            match *button {
+                                MouseButton::Left => Log::info("LMB"),
+                                MouseButton::Right => Log::info("RMB"),
+                                _ => (),
+                            }
+                        }
+                    },
                     _ => ()
                 }
-            }
+            },
+            _ => ()
         }
     }
 

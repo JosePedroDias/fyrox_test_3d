@@ -741,14 +741,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "executor-android"
-version = "0.1.0"
-dependencies = [
- "fyrox",
- "fyrox_test_3d",
-]
-
-[[package]]
 name = "executor-wasm"
 version = "0.1.0"
 dependencies = [
