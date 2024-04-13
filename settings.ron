@@ -322,12 +322,6 @@
             ),
             node_infos: {
                 (
-                    index: 2,
-                    generation: 1,
-                ): (
-                    is_expanded: true,
-                ),
-                (
                     index: 3,
                     generation: 1,
                 ): (
@@ -335,6 +329,12 @@
                 ),
                 (
                     index: 1,
+                    generation: 1,
+                ): (
+                    is_expanded: true,
+                ),
+                (
+                    index: 2,
                     generation: 1,
                 ): (
                     is_expanded: true,
@@ -354,8 +354,8 @@
         ],
     ),
     windows: (
-        window_position: (812.0, 384.0),
-        window_size: (3628.0, 2240.0),
+        window_position: (46.0, 410.0),
+        window_size: (4688.0, 2240.0),
         layout: None,
     ),
 )
